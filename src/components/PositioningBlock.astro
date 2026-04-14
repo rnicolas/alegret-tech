@@ -1,0 +1,19 @@
+---
+const {
+  label = "Positioning",
+  quote = "The field network is not the system. The behavior and the data model are.",
+  body = "Connectivity only matters when the rest of the stack can reason about the device cleanly."
+} = Astro.props;
+---
+
+<section class="section">
+  <div class="page">
+    <div class="positioning-card">
+      <p class="eyebrow">{label}</p>
+      <blockquote class="positioning-quote">
+        {quote}
+      </blockquote>
+      <p class="positioning-body">{body}</p>
+    </div>
+  </div>
+</section>

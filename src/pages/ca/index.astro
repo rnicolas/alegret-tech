@@ -1,0 +1,74 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PositioningBlock from "../../components/PositioningBlock.astro";
+
+const latestPosts = (await getCollection("thinking-ca", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 2);
+---
+
+<BaseLayout
+  title="Roger — Sistemes encastats, arquitectura i estratègia"
+  description="Pensaments i projectes sobre sistemes encastats, interoperabilitat i arquitectura de producte."
+>
+  <Header lang="ca" />
+
+  <main>
+    <section class="hero">
+      <div class="page">
+        <div class="hero-copy">
+          <p class="eyebrow">Sistemes encastats · Arquitectura · Estratègia</p>
+          <h1>Escric sobre com els productes connectats es converteixen en sistemes reals.</h1>
+          <p>
+            El meu focus no és només la connectivitat, sinó la capa que hi ha al damunt:
+            comportament, diagnosi, interoperabilitat i arquitectura.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <PositioningBlock
+      label="Posicionament"
+      quote="La xarxa de camp no és el sistema. El comportament i el model de dades sí."
+      body="La connectivitat només aporta valor quan la resta de la pila pot interpretar els dispositius de manera neta."
+    />
+
+    <section class="section">
+      <div class="page">
+        <p class="eyebrow">Últims textos</p>
+        <h2>Pensaments recents</h2>
+
+        <div class="article-list" style="margin-top: 2rem;">
+          {latestPosts.map((post) => (
+            <a class="article-card card" href={`/ca/pensaments/${post.data.slug}/`}>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="page">
+        <p class="eyebrow">Seccions</p>
+        <div class="article-list">
+          <a class="article-card card" href="/ca/pensaments/">
+            <h3>Pensaments</h3>
+            <p>Textos i arguments sobre sistemes connectats, integració i arquitectura.</p>
+          </a>
+
+          <a class="article-card card" href="/ca/projectes/">
+            <h3>Projectes</h3>
+            <p>Selecció de projectes, sistemes i treball tècnic aplicat.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

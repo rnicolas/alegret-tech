@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from "astro:content";
+import ArticleLayout from "../../../layouts/ArticleLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("thinking-ca", ({ data }) => !data.draft);
+
+  return posts.map((post) => ({
+    params: { slug: post.data.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+const englishPosts = await getCollection("thinking-en");
+const alternate = englishPosts.find(
+  (entry) => entry.data.translationKey === post.data.translationKey
+);
+
+const { Content } = await render(post);
+---
+
+<ArticleLayout
+  title={post.data.title}
+  description={post.data.description}
+  lang="ca"
+  alternateUrl={alternate ? `/en/thinking/${alternate.data.slug}/` : undefined}
+>
+  <Content />
+</ArticleLayout>

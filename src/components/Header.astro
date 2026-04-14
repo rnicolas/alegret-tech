@@ -1,0 +1,40 @@
+---
+const { lang = "en" } = Astro.props;
+
+const nav = {
+  en: {
+    home: "/en/",
+    thinking: "/en/thinking/",
+    projects: "/en/projects/",
+    switchLabel: "Català",
+    switchHref: "/ca/"
+  },
+  ca: {
+    home: "/ca/",
+    thinking: "/ca/pensaments/",
+    projects: "/ca/projectes/",
+    switchLabel: "English",
+    switchHref: "/en/"
+  }
+};
+
+const t = nav[lang];
+---
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href={t.home} class="brand">Roger N. Alegret</a>
+
+    <div class="nav-links">
+      <a href={t.thinking}>{lang === "en" ? "Thinking" : "Pensaments"}</a>
+      <a href={t.projects}>{lang === "en" ? "Projects" : "Projectes"}</a>
+
+      <a
+        href={t.switchHref}
+        onclick={`localStorage.setItem('lang','${lang === "en" ? "ca" : "en"}')`}
+      >
+        {t.switchLabel}
+      </a>
+    </div>
+  </div>
+</nav>

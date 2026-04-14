@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+
+const posts = (await getCollection("thinking-en", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout
+  title="Thinking — Roger N. Alegret"
+  description="Essays and reflections on embedded systems, architecture, interoperability, and strategy."
+>
+  <Header lang="en" />
+
+  <main class="section">
+    <div class="page">
+      <p class="eyebrow">Thinking</p>
+      <h1>Thinking</h1>
+      <p>
+        Essays and arguments on embedded systems, interoperability, system behavior,
+        and product architecture.
+      </p>
+
+      <div class="article-list" style="margin-top: 2rem;">
+        {posts.map((post) => (
+          <a class="article-card card" href={`/en/thinking/${post.data.slug}/`}>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
