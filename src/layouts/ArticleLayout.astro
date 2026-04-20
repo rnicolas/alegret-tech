@@ -13,7 +13,12 @@ interface Props {
 const { title, description, lang, alternateUrl } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  lang={lang}
+  alternateUrl={alternateUrl}
+>
   <Header lang={lang} />
 
   <main class="section">
